@@ -1,5 +1,6 @@
 const choo = require('choo');
 const html = require('choo/html');
+mount = require('choo/mount');
 const http = require('xhr');
 const find = require('lodash/find');
 const logger = require('loglevel');
@@ -12,6 +13,11 @@ const appURL = 'https://5calls.org';
 // const appURL = 'http://localhost:8090';
 
 // use localStorage directly to set this value *before* bootstrapping the app.
+
+if (typeof localStorage == "undefined") {
+  var localStorage = {};
+}
+
 const debug = (localStorage['org.5calls.debug'] === 'true');
 
 if (debug) {
@@ -309,6 +315,7 @@ app.model({
       addressElement.value = "";
     },
     startup: (state, data, send, done) => {
+
       // sometimes we trigger this again when reloading mainView, check for issues
       if (state.issues.length == 0 || state.geolocation == '') {
         // Check for browser support of geolocation
@@ -392,6 +399,12 @@ app.router({ default: '/' }, [
   ['/about', require('./pages/aboutView.js')],
 ]);
 
-const tree = app.start();
-const rootNode = document.getElementById('root');
-document.body.replaceChild(tree, rootNode);
+if (module.parent) {
+  module.exports = app;
+}
+else {
+
+  tree = app.start()
+  mount('#root', tree);
+
+}
