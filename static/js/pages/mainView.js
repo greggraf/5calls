@@ -7,6 +7,7 @@ const content = require('../components/content.js');
 module.exports = (state, prev, send) => {
   return html`
     <div id="root" class="layout">
+      ${console.log(state)}
       ${sidebar(state, prev, send)} 
       ${content(state, prev, send)}
     </div>
