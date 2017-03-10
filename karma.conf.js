@@ -29,7 +29,7 @@ module.exports = function (config) {
 
     browserify: {
       debug: true,
-      transform: ['es2040'],
+      transform: [['es2040', {global: true}]]
     },
 
     // test results reporter to use
