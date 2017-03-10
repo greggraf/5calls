@@ -81,7 +81,7 @@ gulp.task('scripts', function() {
   var b = browserify({
     entries: `${SRC.js}/main.js`,
     debug: true,
-    transform: [es2040]
+    transform: [[es2040, {global: true}]]
   });
 
   return b.bundle()
@@ -94,7 +94,7 @@ gulp.task('build-scripts', function() {
   var b = browserify({
     entries: `${SRC.js}/main.js`,
     debug: false,
-    transform: [es2040]
+    transform: [[es2040, {global: true}]]
   });
 
   return b.bundle()
