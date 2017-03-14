@@ -75,7 +75,9 @@ store.getAll('org.5calls.completed', (completed) => {
   completedIssues = completed == null ? [] : completed;
 });
 
-app.model({
+
+
+var model = {
   state: {
     // remote data
     issues: [],
@@ -412,7 +414,9 @@ app.model({
       // location.hash = "issue/" + data.id;
     }
   },
-});
+};
+
+app.model(model);
 
 app.router({ default: '/' }, [
   ['/', require('./pages/mainView.js')],
@@ -428,4 +432,8 @@ app.router({ default: '/' }, [
 
 const tree = app.start();
 const rootNode = document.getElementById('root');
-document.body.replaceChild(tree, rootNode);
+if (rootNode !== null) {
+  document.body.replaceChild(tree, rootNode);
+}
+
+exports.model = model;
