@@ -129,7 +129,7 @@ var model = {
       issues = state.activeIssues.concat(state.inactiveIssues)
       contactIndices = state.contactIndices
       issues.forEach(issue => {
-        contactIndices[issue.id] = 0
+        contactIndices[issue.id] = contactIndices[issue.id] || 0;
       })
       return {
         issues,
