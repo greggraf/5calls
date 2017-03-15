@@ -14,7 +14,7 @@ describe('startup function', () => {
       
       function spyForSend(reducer) {
         sendCalled.push(reducer);
-      };
+      }
 
       appModel.effects.startup(state, {}, spyForSend);
       
