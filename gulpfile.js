@@ -174,8 +174,8 @@ gulp.task('test:ci', ['eslint'], function() {
 gulp.task('eslint', function() {
   const eslint = require('eslint');
   const linter = new eslint.CLIEngine();
-  const report = linter.executeOnFiles(['./static']);
-  
+  const report = linter.executeOnFiles(['./']);
+
   // customize messages to be a little more helpful/friendly
   report.results.forEach(result => {
     result.messages.forEach(message => {
