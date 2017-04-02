@@ -46,7 +46,7 @@
     "watchify": "^3.9.0"
   },
   "dependencies": {
-    "choo": "^4.1.0",
+    "choo": "^5.0.0",
     "connect-logger": "0.0.1",
     "gulp-util": "^3.0.8",
     "http-server": "^0.9.0",
