@@ -1,8 +1,8 @@
 const html = require('choo/html');
 
-module.exports = (state, prev, send) => {
+module.exports = (state, emit) => {
   if (state.askingLocation && !state.fetchingLocation) {
-    send('focusLocation');
+    emit('focusLocation');
   }
 
   return html`
@@ -41,15 +41,15 @@ module.exports = (state, prev, send) => {
     e.preventDefault();
     const address = this.elements["address"].value;
 
-    send('setLocation', address);
+    emit('setLocation', address);
   }
 
   function enterLocation(e) {
     e.preventDefault();
-    send('enterLocation');
+    emit('enterLocation');
   }
 
   function unsetLocation() {
-    send('unsetLocation');
+    emit('unsetLocation');
   }
 }

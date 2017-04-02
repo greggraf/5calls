@@ -7,12 +7,12 @@ const outcomes = require('./outcomes.js');
 const scriptLine = require('./scriptLine.js');
 const promote = require('./promote.js');
 
-module.exports = (state, prev, send) => {
-  const issue = find(state.issues, ['id', state.location.params.issueid]);
+module.exports = (state, emit) => {
+  const issue = find(state.issues, ['id', state.params.issueid]);
   if (issue == null) {
     return html`<section class="call" onload=${() => {
-      send('fetchInactiveIssues')
-      send('oldcall')
+      emit('fetchInactiveIssues')
+      emit('oldcall')
     }}>
       <div class="call_complete">
         <h2 class="call__title">No calls to make</h2>
@@ -30,9 +30,9 @@ module.exports = (state, prev, send) => {
 
   function contactArea() {
     if (currentContact != null) {
-      return contact(currentContact, state, prev, send)
+      return contact(currentContact, state, emit)
     } else {
-      return noContact(state, prev, send)
+      return noContact(state, emit)
     }
   }
 
@@ -40,16 +40,16 @@ module.exports = (state, prev, send) => {
   <section class="call">
     <header class="call__header">
       <h2 class="call__title">${issue.name}</h2>
-      <div class="call__reason">${issue.reason.split('\n').map((line) => scriptLine(line, state, prev, send))}</div>
+      <div class="call__reason">${issue.reason.split('\n').map((line) => scriptLine(line, state, emit))}</div>
     </header>
 
     ${contactArea()}
 
-    ${script(state, prev, send)}
+    ${script(state, emit)}
 
-    ${outcomes(state, prev, send)}
+    ${outcomes(state, emit)}
 
-    ${promote(state, prev, send)}
+    ${promote(state, emit)}
 
   </section>
   `;

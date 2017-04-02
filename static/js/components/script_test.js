@@ -6,7 +6,7 @@ describe('script component', () => {
   it('should display script if current contact exists', () => {
       let cname = 'Senator Blowhart';
       let id = 1;
-      let location = {params: {issueid: id}};
+      let params = {issueid: id};
       let issue = {
         id: id,
         name: 'Bozo the nominee',
@@ -20,7 +20,7 @@ describe('script component', () => {
       contactIndices[id] = 0;
       let state = {
         issues,
-        location,
+        params,
         contactIndices
       };
       let result = script(state);
@@ -31,7 +31,7 @@ describe('script component', () => {
   it('should NOT display script div if current contact does not exists', () => {
       let cname = 'Senator Blowhart';
       let id = 1;
-      let location = {params: {issueid: id}};
+      let params = {issueid: id};
       let issue = {
         id: id, // does not match location issue id
         name: 'Bozo the nominee',
@@ -45,7 +45,7 @@ describe('script component', () => {
       contactIndices[id] = 1; // contactIndex 1 does not exist
       let state = {
         issues,
-        location,
+        params,
         contactIndices
       };
       let result = script(state);

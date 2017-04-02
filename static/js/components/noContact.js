@@ -1,9 +1,9 @@
 const html = require('choo/html');
 
-module.exports = (state, prev, send) => {
+module.exports = (state, emit) => {
   function enterLocation(e) {
     e.preventDefault();
-    send('enterLocation');
+    emit('enterLocation');
   }
 
   function noContactsMessage(state) {

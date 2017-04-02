@@ -1,8 +1,8 @@
 const html = require('choo/html');
 const find = require('lodash/find');
 
-module.exports = (state, prev, send) => {
-  const issue = find(state.issues, ['id', state.location.params.issueid]);
+module.exports = (state, emit) => {
+  const issue = find(state.issues, ['id', state.params.issueid]);
   const currentIndex = state.contactIndices[issue.id];
   const currentContact = issue.contacts[currentIndex];
 
@@ -15,9 +15,9 @@ module.exports = (state, prev, send) => {
     e.target.blur()
     
     if (result == null) {
-      send('skipCall', { issueid: issue.id });
+      emit('skipCall', { issueid: issue.id });
     } else {
-      send('callComplete', { result: result, contactid: currentContact.id, issueid: issue.id });
+      emit('callComplete', { result: result, contactid: currentContact.id, issueid: issue.id });
     }
 
     return true

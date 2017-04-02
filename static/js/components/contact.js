@@ -1,7 +1,7 @@
 const html = require('choo/html');
 const logger = require('loglevel');
 
-module.exports = (c, state, prev, send) => {
+module.exports = (c, state, emit) => {
   const photoURL = c.photoURL == "" ? "/img/5calls-icon-office.png" : c.photoURL;
   if (c.reason == "") {
     logger.debug("Missing reason for contact " + c.name)
@@ -15,7 +15,7 @@ module.exports = (c, state, prev, send) => {
   let fieldOffices
   if (c.field_offices) {
     fieldOffices = html`
-      <p class="call__contact__show-field-offices">Busy line? <a onclick=${() => {send('toggleFieldOfficeNumbers')}}>Click here to see local office numbers</a></p>
+      <p class="call__contact__show-field-offices">Busy line? <a onclick=${() => {emit('toggleFieldOfficeNumbers')}}>Click here to see local office numbers</a></p>
     `
     if (state.showFieldOfficeNumbers) {
       fieldOffices = html`

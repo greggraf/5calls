@@ -1,8 +1,8 @@
 const html = require('choo/html');
 
-module.exports = (state, prev, send) => {
+module.exports = (state, emit) => {
   return html`
-  <h2 class="callcount" onload=${() => send('getTotals')}>
+  <h2 class="callcount" onload=${() => emit('getTotals')}>
     Together we’ve made ${callCount(state)} calls
   </h2>
   `;

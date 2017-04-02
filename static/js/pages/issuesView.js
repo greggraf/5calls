@@ -3,11 +3,11 @@ const html = require('choo/html');
 const sidebar = require('../components/sidebar.js');
 const issuesInactive = require('../components/issuesInactive.js');
 
-module.exports = (state, prev, send) => {
+module.exports = (state, emit) => {
   return html`
     <div id="root" class="layout">
-      ${sidebar(state, prev, send)}
-      ${issuesInactive(state, prev, send)}
+      ${sidebar(state, emit)}
+      ${issuesInactive(state, emit)}
     </div>
   `;
 }

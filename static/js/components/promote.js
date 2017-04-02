@@ -11,7 +11,7 @@ module.exports = (state) => {
   let twitterTitle = "Share on Twitter"
   let facebookTitle = "Share on Facebook"
 
-  const issue = find(state.issues, ['id', state.location.params.issueid]);
+  const issue = find(state.issues, ['id', state.params.issueid]);
 
   // for selected issues, customize the share text a bit more
   if (issue) {

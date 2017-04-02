@@ -1,6 +1,6 @@
 const html = require('choo/html');
 
-module.exports = (issue, state, prev, send) => {
+module.exports = (issue, state, emit) => {
   function classString(state, baseAddition) {
     const BASE_CLASS = 'issues-list__item' + baseAddition;
     const ACTIVE_CLASS = 'is-active';
@@ -8,7 +8,7 @@ module.exports = (issue, state, prev, send) => {
 
     let classes = [BASE_CLASS];
 
-    state.location.params.issueid === issue.id && classes.push(ACTIVE_CLASS);
+    state.params.issueid === issue.id && classes.push(ACTIVE_CLASS);
 
     if (issueIsCompleted(state, issue)) {
       classes.push(COMPLETE_CLASS);
@@ -31,7 +31,7 @@ module.exports = (issue, state, prev, send) => {
 
   return html`
     <li>
-      <a aria-controls="content" class="${classString(state, '')}" href="/issue/${issue.id}" onclick=${() => send('trackSwitchIssue')}>
+      <a aria-controls="content" class="${classString(state, '')}" href="/issue/${issue.id}" onclick=${() => emit('trackSwitchIssue')}>
         <span aria-live="polite" class="${classString(state, '__status')}"><span class="visually-hidden">${statusText}</span></span>
         <span class="${classString(state, '__title')}">${issue.name}</span>
         <span class="${classString(state, '__summary')}">${issue.contacts.length} call${ issue.contacts.length > 1 ? "s" : "" } to make</span>

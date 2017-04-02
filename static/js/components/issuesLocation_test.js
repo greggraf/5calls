@@ -18,7 +18,7 @@ describe('issuesLocation component', () => {
            let send = (msg) => {
              if (msg == 'focusLocation') didSend = true;
            };
-           issuesLocation(state, null, send);
+           issuesLocation(state, send);
            expect(didSend).to.equal(shouldSend);
          });
     });
@@ -39,7 +39,7 @@ describe('issuesLocation component', () => {
     });
     it('should prompt user for address when askingLocation', () => {
       const state = {fetchingLocation: false, askingLocation:true};
-      let result = issuesLocation(state, null, () => {});
+      let result = issuesLocation(state, () => {});
       expect(result.querySelectorAll("p")).to.have.length(1);
       let formElement = result.querySelector('form');
       expect(formElement.classList.contains('hidden')).to.be.false;

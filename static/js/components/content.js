@@ -4,8 +4,8 @@ const hypothesis = require('./hypothesis.js');
 const about    = require('./about.js');
 const call       = require('./call.js');
 
-module.exports = (state, prev, send) => {
-  const currentView = state.location.params.issueid != null && state.issues.length > 0 ? call : infoPages();
+module.exports = (state, emit) => {
+  const currentView = state.params.issueid != null && state.issues.length > 0 ? call : infoPages();
 
   function infoPages() {
     if (state.getInfo == true) {
@@ -16,8 +16,8 @@ module.exports = (state, prev, send) => {
   }
 
   return html`
-    <main id="content" role="main" aria-live="polite" class="layout__main" onload=${() => send('startup')}>
-      ${currentView(state, prev, send)}
+    <main id="content" role="main" aria-live="polite" class="layout__main" onload=${() => emit('startup')}>
+      ${currentView(state, emit)}
     </main>
   `;
 }

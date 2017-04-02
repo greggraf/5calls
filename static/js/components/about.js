@@ -1,11 +1,11 @@
 const html = require('choo/html');
 const scrollIntoView = require('../utils/scrollIntoView.js');
 
-module.exports = (state, prev, send) => {
+module.exports = (state, emit) => {
 
   function load() {
     scrollIntoView(document.querySelector('#content'));
-    send('startup');
+    emit('startup');
   }
 
   return html`

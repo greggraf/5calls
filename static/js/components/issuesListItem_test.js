@@ -10,8 +10,8 @@ describe('issuesListItem component', () => {
       name: 'Impeach Trump',
       contacts: [{id:88,name:'mccain'}],
     };
-    let location = {params:[{issueId:100}]};
-    let state = {completedIssues: [], location};
+    let params = [{issueId:100}];
+    let state = {completedIssues: [], params};
     let send = () =>  true;
     let results = issuesListItem(issue, state, null, send);
     let spans = results.querySelectorAll('span');
@@ -32,8 +32,8 @@ describe('issuesListItem component', () => {
       name: 'Impeach Trump',
       contacts: [{id:88,name:'mccain'}],
     };
-    let location = {params:[{issueId:100}]};
-    let state = {completedIssues: [99], location};
+    let params = [{issueId:100}];
+    let state = {completedIssues: [99], params};
     let send = () =>  true;
     let results = issuesListItem(issue, state, null, send);
     let span = results.querySelector('span.visually-hidden');

@@ -11,8 +11,8 @@ describe('done component', () => {
       let issues = [issue];
       let totalCalls = 123;
       let userStats = {all: []}
-      let location = {params: {issueid: 88}};
-      let state = {totalCalls, location, issues, userStats};
+      let params = {issueid: 88};
+      let state = {totalCalls, params, issues, userStats};
       let result = done(state);
       let a = result.querySelector('div.promote a');
       expect(a).to.be.defined;
@@ -25,8 +25,8 @@ describe('done component', () => {
     it('should display call count total', () => {
       let totalCalls = 123;
       let userStats = {all: []}
-      let location = {params: {issueId: 88}};
-      let state = {totalCalls, location, userStats};
+      let params = {issueId: 88};
+      let state = {totalCalls, params, userStats};
       let result = done(state);
       // call total value will be displated in callcount component
       let h2 = result.querySelector('.callcount');
@@ -47,8 +47,8 @@ describe('done component', () => {
       }];
       let userStats = {all: all}
       let userCalls = userStats.all.length;
-      let location = {params: {issueId: 88}};
-      let state = {totalCalls, location, userStats};
+      let params = {issueId: 88};
+      let state = {totalCalls, params, userStats};
       let result = done(state);
       expect(result.textContent).to.contain('You have made '+userCalls+' call!');
       expect(result.textContent).to.contain('See more stats on your impact');
@@ -59,8 +59,8 @@ describe('done component', () => {
       let all = [];
       let userStats = {all: all}
       let userCalls = userStats.all.length;
-      let location = {params: {issueId: 88}};
-      let state = {totalCalls, location, userStats};
+      let params = {issueId: 88};
+      let state = {totalCalls, params, userStats};
       let result = done(state);
       expect(result.textContent).to.not.contain('You have made '+userCalls+' call!');
       expect(result.textContent).to.not.contain('See more stats on your impact');

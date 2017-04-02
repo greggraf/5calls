@@ -2,13 +2,14 @@ const html = require('choo/html');
 
 const issuesLocation = require('./issuesLocation.js');
 
-module.exports = (state, prev, send) => {
+module.exports = (state, emit) => {
+
   return html`
     <header class="${classString(state)}" role="banner">
       <h1 class="issues__title">
-        <a href="/" onclick=${() => send('home')}><img class="issues__logo" src="/img/5calls-logotype.png">5 Calls</a>
+        <a href="/" onclick=${() => emit('home')}><img class="issues__logo" src="/img/5calls-logotype.png">5 Calls</a>
       </h1>
-      ${issuesLocation(state, prev, send)}
+      ${issuesLocation(state, emit)}
       ${issueExplain(state)}
     </header>
   `;
@@ -27,7 +28,7 @@ module.exports = (state, prev, send) => {
 
     let classes = [BASE_CLASS];
 
-    state.location.params.issueid == null && classes.push(ACTIVE_CLASS);
+    state.params.issueid == null && classes.push(ACTIVE_CLASS);
 
     return classes.join(' ');
   }

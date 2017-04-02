@@ -4,11 +4,11 @@ const impactResult= require('./impactResult.js');
 const callcount = require('./callcount.js');
 const scrollIntoView = require('../utils/scrollIntoView.js');
 
-module.exports = (state, prev, send) => {
+module.exports = (state, emit) => {
 
   function load() {
     scrollIntoView(document.querySelector('#content'));
-    send('startup');
+    emit('startup');
   }
 
   return html`
@@ -16,13 +16,13 @@ module.exports = (state, prev, send) => {
     <section class="impact">
       <h2 class="impact__title">My Impact</h2>
 
-      ${impactTotal(state, prev, send)}
+      ${impactTotal(state, emit)}
       <p class="impact__text">
         That's awesome and you should feel awesome. <br>
         Every call counts!
       </p>
-      ${impactResult(state, prev, send)}
-      ${callcount(state, prev, send)}
+      ${impactResult(state, emit)}
+      ${callcount(state, emit)}
 
     </section>
     </main>

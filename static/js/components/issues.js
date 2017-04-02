@@ -4,14 +4,14 @@ const scrollIntoView = require('../utils/scrollIntoView.js');
 const issuesHeader = require('./issuesHeader.js');
 const issuesList = require('./issuesList.js');
 
-module.exports = (state, prev, send) => {
+module.exports = (state, emit) => {
 	function debugText(debug) {
     return debug ? html`<a href="#" onclick=${resetCompletedIssues}>reset</a>` : html``;
   }
 
   function resetCompletedIssues() {
-    send('resetCompletedIssues');
-    send('resetUserStats');
+    emit('resetCompletedIssues');
+    emit('resetUserStats');
   }
 
   function scrollToTop () {
@@ -20,8 +20,8 @@ module.exports = (state, prev, send) => {
 
   return html`
     <div class="issues">
-      ${issuesHeader(state, prev, send)}
-      ${issuesList(state, prev, send)}
+      ${issuesHeader(state, emit)}
+      ${issuesList(state, emit)}
       <a href="/more" class="issues__footer-link" onclick=${scrollToTop}>view more issues</a>
       ${debugText(state.debug)}
     </div>
