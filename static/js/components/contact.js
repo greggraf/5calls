@@ -40,14 +40,21 @@ module.exports = (c, state, prev, send) => {
     }
   }
 
+  function contactPhone( phoneNumber ) {
+    if (phoneNumber) {
+      return html`<p class="call__contact__phone">
+          <a href="tel:${phoneNumber.replace(/-| /g, '')}">${phoneNumber}</a>
+        </p>
+      `;
+    }
+  }
+  
   return html`
       <div class="call__contact" id="contact">
         <div class="call__contact__image"><img alt="" src="${photoURL}"/></div>
         <h3 class="call__contact__type">${t('contact.callThisOffice')}</h3>
         <p class="call__contact__name">${c.name} ${repID}</p>
-        <p class="call__contact__phone">
-          <a href="tel:${c.phone.replace(/-| /g, '')}">${c.phone}</a>
-        </p>
+        ${contactPhone(c.phone)}
         ${fieldOffices}
         <h3 class="call__contact__reason__header">${t('contact.whyYouAreCallingThisOffice')}</h3>
         <p class="call__contact__reason">${c.reason}</p>
