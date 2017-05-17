@@ -101,9 +101,7 @@ store.getAll('org.5calls.userStats', (stats) => {
     localStats = stats[0];
   }
 });
-
-app.model({
-  state: {
+exports.state = {
     // remote data
     issues: [],
     activeIssues: [],
@@ -137,7 +135,9 @@ app.model({
     showFieldOfficeNumbers: false,
 
     debug: debug,
-  },
+  }
+app.model({
+  state: exports.state,
 
   reducers: {
     receiveActiveIssues: (state, data) => {
