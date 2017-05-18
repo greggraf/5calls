@@ -101,41 +101,43 @@ store.getAll('org.5calls.userStats', (stats) => {
     localStats = stats[0];
   }
 });
+
 exports.state = {
-    // remote data
-    issues: [],
-    activeIssues: [],
-    inactiveIssues: [],
-    totalCalls: 0,
-    splitDistrict: false,
+  // remote data
+  issues: [],
+  activeIssues: [],
+  inactiveIssues: [],
+  totalCalls: 0,
+  splitDistrict: false,
 
-    // manual input address
-    address: cachedAddress,
+  // manual input address
+  address: cachedAddress,
 
-    // automatically geolocating
-    geolocation: cachedGeo,
-    geoCacheTime: cachedGeoTime,
-    allowBrowserGeo: cachedAllowBrowserGeo,
-    cachedCity: cachedCity,
+  // automatically geolocating
+  geolocation: cachedGeo,
+  geoCacheTime: cachedGeoTime,
+  allowBrowserGeo: cachedAllowBrowserGeo,
+  cachedCity: cachedCity,
 
-    // local user stats
-    userStats: localStats,
+  // local user stats
+  userStats: localStats,
 
-    // view state
-    // getInfo: false,
-    // activeIssue: false,
-    // completeIssue: false,
-    askingLocation: false,
-    fetchingLocation: cachedFetchingLocation,
-    validatingLocation: false,
-    locationFetchType: cachedLocationFetchType,
-    contactIndices: {},
-    completedIssues: completedIssues,
+  // view state
+  // getInfo: false,
+  // activeIssue: false,
+  // completeIssue: false,
+  askingLocation: false,
+  fetchingLocation: cachedFetchingLocation,
+  validatingLocation: false,
+  locationFetchType: cachedLocationFetchType,
+  contactIndices: {},
+  completedIssues: completedIssues,
 
-    showFieldOfficeNumbers: false,
+  showFieldOfficeNumbers: false,
 
-    debug: debug,
-  }
+  debug: debug
+};
+
 app.model({
   state: exports.state,
 
