@@ -5,7 +5,6 @@ const expect = chai.expect;
 
 // code to cause a module to re-run on require
 // only until the code is cleaned up to be more testable
-
 var moduleCache = arguments[5];
 function clearFromCache(instance) {
   for (var key in moduleCache) {
