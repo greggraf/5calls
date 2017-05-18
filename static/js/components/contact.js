@@ -40,6 +40,7 @@ module.exports = (c, state, prev, send) => {
     }
   }
 
+
   function contactPhone( phoneNumber ) {
     if (phoneNumber) {
       return html`<p class="call__contact__phone">
