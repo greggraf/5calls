@@ -114,7 +114,7 @@ module.exports = function (configuration) {
     // https://github.com/istanbuljs/babel-plugin-istanbul/issues/81
     browserify: {
       debug: true,
-      transform: ['es2040', {global: true}]
+      transform: [['es2040', {global: true}]]
     },
 
     // Since tests are remote, give a little extra time
