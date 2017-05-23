@@ -13,80 +13,52 @@ const app = choo();
 const appURL = 'https://5calls.org';
 // const appURL = 'http://localhost:8090';
 
+const	storeKeys = {
+  allowGeolocation: 'org.5calls.allow_geolocation',
+  completed: 'org.5calls.completed',
+  debug: 'org.5calls.debug',
+  geolocation: 'org.5calls.geolocation',
+  geolocationTime: 'org.5calls.geolocation_time',
+  geolocationCity: 'org.5calls.geolocation_city',
+  location: 'org.5calls.location',
+  userlocale: 'org.5calls.userlocale',
+  userStats: 'org.5calls.userStats'
+};
+
 // use localStorage directly to set this value *before* bootstrapping the app.
-const debug = (localStorage['org.5calls.debug'] === 'true');
+const debug = (localStorage[storeKeys.debug] === 'true');
 
 if (debug) {
   // we don't need loglevel's built-in persistence; we do it ourselves above ^
   logger.setLevel(logger.levels.TRACE, false);
 }
 
-// get the stored zip location
-let cachedAddress = '';
-store.getAll('org.5calls.location', (location) => {
-  if (location.length > 0) {
-    cachedAddress = location[0];
-  }
-});
-
 // get the stored geo location
-let cachedGeo = '';
-store.getAll('org.5calls.geolocation', (geo) => {
-  if (geo.length > 0) {
-    logger.debug("geo get", geo[0]);
-    cachedGeo = geo[0];
-  }
-});
-
+let cachedGeo = store.get(storeKeys.geolocation) || '';
 let cachedFetchingLocation = (cachedGeo === '') ? true : false;
-
-// get the stored geo location
-let cachedAllowBrowserGeo = true;
-store.getAll('org.5calls.allow_geolocation', (allowGeo) => {
-  if (allowGeo.length > 0) {
-    logger.debug("allowGeo get", allowGeo[0]);
-    cachedAllowBrowserGeo = allowGeo[0];
-  }
-});
-
+let cachedAllowBrowserGeo = (store.get(storeKeys.allowGeolocation) === false)? false: true;
 let cachedLocationFetchType = (cachedAllowBrowserGeo) ? 'browserGeolocation' : 'ipAddress';
 
-// get the time the geo was last fetched
-let cachedGeoTime = '';
-store.getAll('org.5calls.geolocation_time', (geo) => {
-  if (geo.length > 0) {
-    logger.debug("geo time get", geo[0]);
-    cachedGeoTime = geo[0];
-  }
-});
-
-let cachedCity = '';
-store.getAll('org.5calls.geolocation_city', (city) => {
-  if (city.length > 0) {
-    logger.debug("city get", city[0]);
-    cachedCity = city[0];
-  }
-});
+// get the time the geo was last fetched, city and zip
+let cachedGeoTime = store.get(storeKeys.geolocationTime) || '';
+let cachedCity = store.get(storeKeys.geolocationCity) || '';
+let cachedAddress = store.get(storeKeys.location) || '';
 
 cachedFetchingLocation  = (cachedCity !== '') ? true : cachedFetchingLocation;
 cachedLocationFetchType = (cachedAddress !== '') ? 'address' : cachedLocationFetchType;
 
 // get the stored completed issues
 let completedIssues = [];
-store.getAll('org.5calls.completed', (completed) => {
+store.getAll(storeKeys.completed, (completed) => {
   completedIssues = completed == null ? [] : completed;
 });
 
-let cachedUserLocale = '';
-store.getAll('org.5calls.userlocale', (userLocale) => {
-  if (userLocale.length > 0) {
-    logger.debug("user locale get", userLocale[0]);
-    cachedUserLocale = userLocale[0];
-  } else {
-    cachedUserLocale = localization.getLocaleFromBrowserLanguage(navigator.language || navigator.userLanguage);
-    store.add('org.5calls.userlocale', cachedUserLocale, () => {});
-  }
-});
+let cachedUserLocale = store.get(storeKeys.userlocale);
+
+if (!cachedUserLocale) {
+  cachedUserLocale = localization.getLocaleFromBrowserLanguage(navigator.language || navigator.userLanguage);
+  store.set(storeKeys.userlocale, cachedUserLocale);
+}
 
 // get stored user stats
 const defaultStats = {
@@ -95,12 +67,8 @@ const defaultStats = {
   vm: 0,
   unavailable: 0,
 };
-let localStats = defaultStats;
-store.getAll('org.5calls.userStats', (stats) => {
-  if (stats.length > 0) {
-    localStats = stats[0];
-  }
-});
+let localStats = store.get(storeKeys.userStats) || defaultStats;
+
 
 app.model({
   state: {
@@ -174,9 +142,9 @@ app.model({
       const geo = data.loc;
       const city = data.city;
       const time = new Date().valueOf();
-      store.replace("org.5calls.geolocation", 0, geo, () => {});
-      store.replace("org.5calls.geolocation_city", 0, city, () => {});
-      store.replace("org.5calls.geolocation_time", 0, time, () => {});
+      store.set(storeKeys.geolocation, geo);
+      store.set(storeKeys.geolocationCity, city);
+      store.set(storeKeys.geolocationTime, time);
       return { geolocation: geo, cachedCity: city, geoCacheTime: time, fetchingLocation: false, askingLocation: false };
     },
     setContactIndices: (state, data) => {
@@ -198,22 +166,22 @@ app.model({
         time: new Date().valueOf()
       });
       stats[data.result] = stats[data.result] + 1;
-      store.replace("org.5calls.userStats", 0, stats, () => {});
+      store.set(storeKeys.userStats, stats);
       return { userStats: stats };
     },
     setAddress: (state, address) => {
-      store.replace("org.5calls.location", 0, address, () => {});
+      store.set(storeKeys.location, address);
 
       return { address: address, askingLocation: false, validatingLocation: true };
     },
     setGeolocation: (state, data) => {
-      store.replace("org.5calls.geolocation", 0, data, () => {});
+      store.set(storeKeys.geolocation, data);
       return { geolocation: data, fetchingLocation: false };
     },
     setCachedCity: (state, data) => {
       const response = JSON.parse(data);
       if (response.normalizedLocation) {
-        store.replace("org.5calls.geolocation_city", 0, response.normalizedLocation, () => {});
+        store.set(storeKeys.geolocationCity, response.normalizedLocation);
         return { cachedCity: response.normalizedLocation };
       } else {
         return null;
@@ -223,7 +191,7 @@ app.model({
       return { fetchingLocation: data };
     },
     allowBrowserGeolocation: (state, data) => {
-      store.replace("org.5calls.allow_geolocation", 0, data, () => {});
+      store.set(storeKeys.allowGeolocation, data);
       return { allowBrowserGeo: data };
     },
     enterLocation: () => {
@@ -234,18 +202,18 @@ app.model({
       return { locationFetchType: data, askingLocation: askingLocation, fetchingLocation: !askingLocation };
     },
     resetLocation: () => {
-      store.remove("org.5calls.location", () => {});
-      store.remove("org.5calls.geolocation", () => {});
-      store.remove("org.5calls.geolocation_city", () => {});
-      store.remove("org.5calls.geolocation_time", () => {});
+      store.remove(storeKeys.location, () => {});
+      store.remove(storeKeys.geolocation, () => {});
+      store.remove(storeKeys.geolocationCity, () => {});
+      store.remove(storeKeys.geolocationTime, () => {});
       return { address: '', geolocation: '', cachedCity: '', geoCacheTime: '' };
     },
     resetCompletedIssues: () => {
-      store.remove("org.5calls.completed", () => {});
+      store.remove(storeKeys.completed, () => {});
       return { completedIssues: [] };
     },
     resetUserStats: () => {
-      store.replace("org.5calls.userStats", 0, defaultStats, () => {});
+      store.set(storeKeys.userStats, defaultStats);
       return { userStats: defaultStats };
     },
     home: () => {
@@ -417,7 +385,7 @@ app.model({
         send('setContactIndices', { newIndex: currentIndex + 1, issueid: issue.id }, done);
       } else {
         scrollIntoView(document.querySelector('#content'));
-        store.add("org.5calls.completed", issue.id, () => {});
+        store.add(storeKeys.completed, issue.id, () => {});
         send('location:set', "/done/" + issue.id, done);
         send('setContactIndices', { newIndex: 0, issueid: issue.id }, done);
       }
