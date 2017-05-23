@@ -71,10 +71,10 @@ describe('localStorage utils', () => {
       localStorage.foo2 = '["bar2", "baz2"]';
       
       localStorage.removeItem = function(key) {
-        localStorage.removeItem.wasCalledWith = key
-      }
+        localStorage.removeItem.wasCalledWith = key;
+      };
 
-      store.remove("foo2", function(result){
+      store.remove("foo2", function(){
         expect(localStorage.removeItem.wasCalledWith).to.eql("foo2");
       });      
 

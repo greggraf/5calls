@@ -4,11 +4,9 @@ var _localStorage = window.localStorage;
 
 module.exports = {
   getAll: (storeName, cb) => {
-    console.log("_localStorage", _localStorage)
     try {
       cb(JSON.parse(_localStorage[storeName]));
     } catch (e) {
-      console.log("err")
       cb([]);
     }
   },
