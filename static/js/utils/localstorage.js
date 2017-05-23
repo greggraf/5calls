@@ -1,11 +1,31 @@
 // localStorage wrapper
+
+var _localStorage = window.localStorage;
+
 module.exports = {
   getAll: (storeName, cb) => {
+    console.log("_localStorage", _localStorage)
     try {
-      cb(JSON.parse(window.localStorage[storeName]));
+      cb(JSON.parse(_localStorage[storeName]));
     } catch (e) {
+      console.log("err")
       cb([]);
     }
+  },
+  get: (storeName) => {
+    try {
+      var item;
+      var all = JSON.parse(_localStorage[storeName]);
+      if (all.length > 0) {
+        item = all[0];
+      }
+      return item;
+    } catch (e) {
+      return;
+    }
+  },
+  set: (storeName, item) => {
+    module.exports.replace(storeName, 0, item, () => {});
   },
   add: (storeName, item, cb) => {
     module.exports.getAll(storeName, (items) => {
@@ -21,16 +41,19 @@ module.exports = {
   },
   remove: (storeName, cb) => {
     module.exports.getAll(storeName, () => {
-      window.localStorage.removeItem(storeName);
+      _localStorage.removeItem(storeName);
       cb();
     });
   },
+  setStorage: (storageObj) => {
+    _localStorage = storageObj;
+  }
 };
 
 // handle storage quota errors
 function saveStore (storeName, storeItems, cb) {
   try {
-    window.localStorage[storeName] = storeItems;
+    _localStorage[storeName] = storeItems;
     cb();
   }
   catch (e) {
