@@ -10,7 +10,7 @@ module.exports = (c, state, prev, send) => {
 
   let repID = "";
   if (c.party != "") {
-    repID = c.party.substring(0,1) + "-" + c.state;
+    repID = " " + c.party.substring(0,1) + "-" + c.state;
   }
 
   let fieldOffices;
@@ -24,7 +24,7 @@ module.exports = (c, state, prev, send) => {
           <h3 class="call__contact__field-offices__header">${t('contact.localOfficeNumbers')}</h3>
           <ul class="call__contact__field-office-list">
             ${c.field_offices.map(office => html`
-              <li><a href="tel:${office.phone.replace(/-| /g, '')}">${office.phone}</a> ${cityFormat(office,c)}</li>
+              <li>${makePhoneLink(office.phone)}${cityFormat(office,c)}</li>
             `)}
           </ul>
         </div>
@@ -34,17 +34,16 @@ module.exports = (c, state, prev, send) => {
 
   function cityFormat(office, c) {
     if (office.city) {
-      return "- " + office.city + ", " + c.state;
+      return " - " + office.city + ", " + c.state;
     } else {
       return "";
     }
   }
 
-  function contactPhone( phoneNumber ) {
+  function makePhoneLink( phoneNumber ) {
     if (phoneNumber) {
-      return html`<p class="call__contact__phone">
-          <a href="tel:${phoneNumber.replace(/-| /g, '')}">${phoneNumber}</a>
-        </p>
+      return html`
+          <a href="tel:${phoneNumber.replace(/-| /g, '')}">${phoneNumber.replace(/^\+1 /, '')}</a>
       `;
     }
   }
@@ -53,8 +52,8 @@ module.exports = (c, state, prev, send) => {
       <div class="call__contact" id="contact">
         <div class="call__contact__image"><img alt="" src="${photoURL}"/></div>
         <h3 class="call__contact__type">${t('contact.callThisOffice')}</h3>
-        <p class="call__contact__name">${c.name} ${repID}</p>
-        ${contactPhone(c.phone)}
+        <p class="call__contact__name">${c.name}${repID}</p>
+        <p class="call__contact__phone">${makePhoneLink(c.phone)}</p>
         ${fieldOffices}
         <h3 class="call__contact__reason__header">${t('contact.whyYouAreCallingThisOffice')}</h3>
         <p class="call__contact__reason">${c.reason}</p>
