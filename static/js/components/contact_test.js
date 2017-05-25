@@ -2,7 +2,7 @@ const contact = require('./contact');
 const chai = require('chai');
 const expect = chai.expect;
 
-describe.only('contact component', () => {
+describe('contact component', () => {
 
   let state, contactData;
 
@@ -47,8 +47,7 @@ describe.only('contact component', () => {
     contactData.field_offices = [
       { phone: '+1 212-123-1234', city: 'Whigville' }
     ];
-
-    state.showFieldOfficeNumbers = true
+    state.showFieldOfficeNumbers = true;
     
     let result = contact(contactData, state);    
     let firstLi = result.querySelector('ul.call__contact__field-office-list li');
@@ -59,7 +58,7 @@ describe.only('contact component', () => {
 
   it('should display field office data without city if present', () => {
     contactData.field_offices = [{ phone: '+1 212-123-1234', city: '' }];
-    state.showFieldOfficeNumbers = true
+    state.showFieldOfficeNumbers = true;
 
     let result = contact(contactData, state);
     expect(result.querySelector('ul.call__contact__field-office-list li').textContent).to.equal('212-123-1234');
