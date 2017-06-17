@@ -1,9 +1,12 @@
 const html = require('choo/html');
 const t = require('../utils/translation');
+const find = require('lodash/find');
 
 const issuesLocation = require('./issuesLocation.js');
 
 module.exports = (state, prev, send) => {
+  const issue = find(state.issues, ['id', state.location.params.issueid]);
+
   return html`
     <header class="${classString(state)}" role="banner">
       <h1 class="issues__title">
@@ -15,7 +18,11 @@ module.exports = (state, prev, send) => {
   `;
 
   function issueExplain(state) {
-    if (state.issues.length > 0) {
+    if (issue && issue.categories != null) {
+      var categoryName = categoryName = issue.categories[0].name;
+
+      return html`<h2>${categoryName}</h2>`;
+    } else if (state.issues.length > 0) {
       return html`<h2>${t("issues.whatsImportantToYou")}</h2>`;
     } else {
       return html``;

@@ -23,7 +23,7 @@ module.exports = (state, prev, send) => {
     <div class="issues">
       ${issuesHeader(state, prev, send)}
       ${issuesList(state, prev, send)}
-      <a href="/more" class="issues__footer-link" onclick=${scrollToTop}>${t("issues.viewMoreIssues")}</a>
+      <a href="/more" class="issues__footer-link" onclick=${scrollToTop}>${t("issues.viewAllActiveIssues")}</a>
       ${debugText(state.debug)}
     </div>
   `;

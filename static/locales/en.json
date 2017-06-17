@@ -87,7 +87,9 @@
     "issues":{
       "whatsImportantToYou": "What’s important to you?",
       "issuesListItemSummary": "$t(common.callWithCount,{'count': {{callsToMake}}}) to make",
-      "viewMoreIssues":"View more issues"
+      "viewAllActiveIssues":"View all active issues",
+      "activeIssuesWithCount": "{{count}} Active Issues",
+      "uncategorizedIssues": "Uncategorized Issues"
     },
     "location": {
       "gettingYourLocation": "Getting your location",
@@ -138,5 +140,10 @@
       "shareOnTwitter": "Share on Twitter",
       "shareOnFacebook": "Share on Facebook",
       "motto": "Spend 5 minutes. Make 5 calls. Make your voice heard."
+    },
+    "townhall": {
+      "findNearYou": "Find an upcoming event near you",
+      "moreInfo": "More info",
+      "thpCredit": "Events from the <a href='https://townhallproject.com' target='_new'>Town Hall Project</a>"
     }
 }

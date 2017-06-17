@@ -3,7 +3,7 @@ const t = require('../utils/translation');
 const promote = require('./promote.js');
 const callcount = require('./callcount.js');
 const impactTotal = require('./impactTotal.js');
-
+const townHall = require('./townHall.js');
 
 module.exports = (state, prev, send) => {
   const userCalls = state.userStats.all.length;
@@ -27,6 +27,7 @@ module.exports = (state, prev, send) => {
         <p class="call__text">${t('callComplete.pickAnotherIssue')}</p>
         ${promote(state, prev, send)}
         <p class="call__text"> ${t('callComplete.learnWhyCallingIsGreat')}</p>
+        ${townHall(state)}
         ${callcount(state, prev, send)}
       </div>
     </section>

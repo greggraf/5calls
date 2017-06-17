@@ -87,7 +87,9 @@
     "issues":{
       "whatsImportantToYou": "¿Qué importa para usted?",
       "issuesListItemSummary": "$t(common.callWithCount,{'count': {{callsToMake}}}) para hacer",
-      "viewMoreIssues":"Ver más temas"
+      "viewAllActiveIssues":"Ver todos los temas activos",
+      "activeIssuesWithCount": "{{count}} Temas Activos",
+      "uncategorizedIssues": "Temas Sin Categorizar"
     },
     "location": {
       "gettingYourLocation": "Obtener su ubicación",
@@ -138,5 +140,10 @@
       "shareOnTwitter": "Comparta en Twitter",
       "shareOnFacebook": "Comparta en Facebook",
       "motto": "Tome 5 minutos, haga 5 llamadas"
+    },
+    "townhall": {
+      "findNearYou": " Encuentre un evento inminente cerca a Ud.",
+      "moreInfo": "Más información",
+      "thpCredit": "Eventos del <a href='https://townhallproject.com' target='_new'>Proyecto de Town Hall</a>"
     }
 }
